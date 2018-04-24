@@ -1,0 +1,13 @@
+<h3>Timeline</h3>
+<div class="grid grid-pad">
+  <a *ngFor="let tweet of tweets" class="col-1-4"
+    routerLink="/detail/{{tweet.id}}">
+    <div class="module tweets">
+      <h4>{{tweet.owner.username}}</h4>
+      <h4>{{tweet.content}}</h4>
+      <h4>{{tweet.date}}</h4>
+    </div>
+  </a>
+</div>
+
+<app-tweet-search></app-tweet-search>

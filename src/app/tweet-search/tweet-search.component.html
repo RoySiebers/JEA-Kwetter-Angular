@@ -1,0 +1,14 @@
+<div id="search-component">
+  <h4>Tweet Search</h4>
+
+  <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+
+  <ul class="search-result">
+    <li *ngFor="let tweet of tweets$ | async" >
+      <a routerLink="/detail/{{tweet.id}}">
+        {{tweet.owner.username}} : {{tweet.content}}
+
+      </a>
+    </li>
+  </ul>
+</div>

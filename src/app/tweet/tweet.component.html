@@ -1,0 +1,20 @@
+<h2>
+  My Tweets</h2>
+<div>
+  <label>Tweet content:
+    <input #owner placeholder="Owner"/>
+    <input #content placeholder="Content"/>
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(content.value,owner.value); content.value=''; owner.value=''" >
+    add
+  </button>
+</div>
+<ul class="tweets">
+  <li *ngFor="let tweet of tweets">
+    <a routerLink="/detail/{{tweet.id}}">
+      <span class="badge"> id: {{tweet.id}} Owner: {{tweet.owner.username}}</span> Content: {{tweet.content}}
+    </a>
+    <button class="delete" title="delete tweet" (click)="delete(tweet)">x</button>
+  </li>
+</ul>

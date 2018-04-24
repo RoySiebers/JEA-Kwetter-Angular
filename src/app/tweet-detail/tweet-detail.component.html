@@ -1,0 +1,14 @@
+<button (click)="goBack()">go back</button>
+<div *ngIf="tweet">
+  <h2> Owner: {{ tweet.owner.username }}</h2>
+  <div>
+    <span>id: </span>{{tweet.id}}</div>
+  <div>
+    <span>content: </span>{{tweet.content}}</div>
+  <div>
+    <label>name:
+      <input [(ngModel)]="tweet.content" placeholder="Content">
+    </label>
+  </div>
+  <button (click)="save()">save</button>
+</div>
