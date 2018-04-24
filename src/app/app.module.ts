@@ -13,6 +13,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule }    from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { TweetSearchComponent } from './tweet-search/tweet-search.component';
+import { LoginComponent } from './login/login.component';
+import { LoginService } from './login.service';
 
 
 @NgModule({
@@ -23,6 +25,7 @@ import { TweetSearchComponent } from './tweet-search/tweet-search.component';
     MessagesComponent,
     DashboardComponent,
     TweetSearchComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,8 @@ import { TweetSearchComponent } from './tweet-search/tweet-search.component';
   ],
   providers: [
     TweetService,
-    MessageService
+    MessageService,
+    LoginService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,5 @@
+<div id="login-component">
+  <input #username placeholder="username"/>
+  <input type="password" #password placeholder="password"/>
+  <button (click)="authenticate(username.value, password.value); content.value=''; owner.value=''">login</button>
+</div>
