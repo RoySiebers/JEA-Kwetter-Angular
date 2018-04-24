@@ -60,7 +60,7 @@ export class TweetService {
       catchError(this.handleError<Tweet>(`getTweet id=${id}`))
     );
   }
-  /** PUT: update the hero on the server */
+  /** PUT: update the tweet on the server */
   updateTweet(tweet: Tweet): Observable<any> {
     return this.http.put(this.tweetsUrl, tweet, httpOptions).pipe(
       tap(_ => this.log(`updated Tweet id=${tweet.id}`)),
@@ -68,15 +68,16 @@ export class TweetService {
     );
   }
 
-  /** POST: add a new hero to the server */
+  /** POST: add a new tweet to the server */
   addTweet(tweet: Tweet): Observable<Tweet> {
-    return this.http.post<Tweet>(this.tweetsUrl, tweet, httpOptions).pipe(
+    const url = 'http://localhost:8080/JEA-Kwetter/api/tweets/post';
+    return this.http.post<Tweet>(url, tweet, httpOptions).pipe(
       tap((tweet: Tweet) => this.log(`added tweet w/ id=${tweet.id}`)),
       catchError(this.handleError<Tweet>('addTweet'))
     );
   }
 
-  /** DELETE: delete the hero from the server */
+  /** DELETE: delete the tweet from the server */
   deleteTweet(tweet: Tweet | number): Observable<Tweet> {
     const id = typeof tweet === 'number' ? tweet : tweet.id;
     const url = `${this.tweetsUrl}/${id}`;

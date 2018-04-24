@@ -2,11 +2,10 @@
   My Tweets</h2>
 <div>
   <label>Tweet content:
-    <input #owner placeholder="Owner"/>
     <input #content placeholder="Content"/>
   </label>
   <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)="add(content.value,owner.value); content.value=''; owner.value=''" >
+  <button (click)="add(content.value); content.value='';" >
     add
   </button>
 </div>

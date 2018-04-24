@@ -24,13 +24,18 @@ export class TweetComponent implements OnInit {
       .subscribe(tweets => this.tweets = tweets);
   }
 
-  add(content: string,owner:number): void {
+  add(content: string): void {
     content = content.trim();
+    let owner: Owner = { id:11, username:"Harry"};
+    let tweet: Tweet = { id:33, content: content ,owner:owner,date:new Date() };
     if (!content) { return; }
-    this.tweetService.addTweet( { id: 33, content: 'Dit is een tweet',owner: new Owner(),date:new Date() })
+    this.tweetService.addTweet(tweet)
       .subscribe(tweet => {
+        this.getTweets();
         this.tweets.push(tweet);
+        
       });
+ 
   }
   delete(tweet: Tweet): void {
     this.tweets = this.tweets.filter(h => h !== tweet);
