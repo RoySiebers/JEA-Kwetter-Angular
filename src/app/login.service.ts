@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { MessageService } from './message.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpEvent } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 
 const httpOptions = {
@@ -20,9 +20,22 @@ export class LoginService {
 
 
   authenticate(username:string, password:string){
-    const payload = JSON.parse('{ "username":"' + username + '" , "password":"' + password + '"}');
+    const payload = JSON.parse('{ "username":"' + username + '" , "password":"' + password + '", "observe":"response" }');
     const url = `${this.authUrl}`;
-    this.http.post(url,payload).subscribe((response : any) => console.log(response.headers.get('Authorization')));
+    this.http.post<any>(url,payload).subscribe((response) => {
+      console.log(response);
+      if (response){
+        localStorage.setItem("LoggedIn", response.username);
+        localStorage.setItem("AuthToken", response.AuthToken);
+      }
+    });
+  }
+
+  getLoggedInUser(){
+    if(localStorage){
+      let loggedInUser = localStorage.getItem("LoggedIn");
+      console.log(loggedInUser);
+    }
   }
 
 }
