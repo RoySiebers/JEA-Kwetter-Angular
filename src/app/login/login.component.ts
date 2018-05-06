@@ -9,12 +9,22 @@ import { LoginService } from '../login.service';
 export class LoginComponent implements OnInit {
 
   constructor(private loginService: LoginService){ }
+  loggedInUser : boolean;
 
   ngOnInit() {
+    this.loggedInUser = false;
   }
 
   authenticate(username:string, password:string){
     this.loginService.authenticate(username, password);
+  }
+
+  getLoggedInUser(){
+    return this.loginService.getLoggedInUser();
+  }
+
+  logOut(){
+    this.loginService.logOut();
   }
 
 }

@@ -23,7 +23,6 @@ export class LoginService {
     const payload = JSON.parse('{ "username":"' + username + '" , "password":"' + password + '", "observe":"response" }');
     const url = `${this.authUrl}`;
     this.http.post<any>(url,payload).subscribe((response) => {
-      console.log(response);
       if (response){
         localStorage.setItem("LoggedIn", response.username);
         localStorage.setItem("AuthToken", response.AuthToken);
@@ -33,8 +32,13 @@ export class LoginService {
 
   getLoggedInUser(){
     if(localStorage){
-      let loggedInUser = localStorage.getItem("LoggedIn");
-      console.log(loggedInUser);
+      return localStorage.getItem("LoggedIn");
+    }
+  }
+
+  logOut(){
+    if(localStorage){
+      localStorage.clear();
     }
   }
 
