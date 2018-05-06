@@ -16,6 +16,7 @@ import { TweetSearchComponent } from './tweet-search/tweet-search.component';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login.service';
 import { ProfileComponent } from './profile/profile.component';
+import { OwnerService } from './owner.service';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { ProfileComponent } from './profile/profile.component';
   providers: [
     TweetService,
     MessageService,
-    LoginService
+    LoginService,
+    OwnerService
   ],
   bootstrap: [AppComponent]
 })
