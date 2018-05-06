@@ -15,8 +15,7 @@ import { TweetService }  from '../tweet.service';
 
 export class TweetDetailComponent implements OnInit {
 
-  @Input() tweet: Tweet;
-
+  private tweets: Tweet[];
   constructor(
     private route: ActivatedRoute,
     private tweetService: TweetService,
@@ -28,15 +27,12 @@ export class TweetDetailComponent implements OnInit {
   }
   getTweet(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.tweetService.getTweet(id)
-      .subscribe(tweet => this.tweet = tweet);
+      this.tweetService.getTweetsFromOwner(id)
+        .subscribe(tweets => this.tweets = tweets);
   }
   goBack(): void {
     this.location.back();
   }
-  save(): void {
-    this.tweetService.updateTweet(this.tweet)
-      .subscribe(() => this.goBack());
-  }
+  
 
 }
