@@ -5,7 +5,7 @@
 
   <ul class="search-result">
     <li *ngFor="let tweet of tweets$ | async" >
-      <a routerLink="/detail/{{tweet.id}}">
+      <a routerLink="/detail/{{tweet.owner.id}}">
         {{tweet.owner.username}} : {{tweet.content}}
 
       </a>

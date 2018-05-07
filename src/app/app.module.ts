@@ -15,6 +15,8 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { TweetSearchComponent } from './tweet-search/tweet-search.component';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login.service';
+import { ProfileComponent } from './profile/profile.component';
+import { OwnerService } from './owner.service';
 
 
 @NgModule({
@@ -26,6 +28,7 @@ import { LoginService } from './login.service';
     DashboardComponent,
     TweetSearchComponent,
     LoginComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,8 @@ import { LoginService } from './login.service';
   providers: [
     TweetService,
     MessageService,
-    LoginService
+    LoginService,
+    OwnerService
   ],
   bootstrap: [AppComponent]
 })

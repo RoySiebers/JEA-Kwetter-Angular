@@ -20,7 +20,7 @@ export class TweetSearchComponent implements OnInit {
   tweets$: Observable<Tweet[]>;
   private searchTerms = new Subject<string>();
 
-  constructor(private heroService: TweetService) {}
+  constructor(private tweetService: TweetService) {}
 
   // Push a search term into the observable stream.
   search(term: string): void {
@@ -36,7 +36,7 @@ export class TweetSearchComponent implements OnInit {
       distinctUntilChanged(),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.heroService.searchTweets(term)),
+      switchMap((term: string) => this.tweetService.searchTweets(term)),
     );
   }
 }

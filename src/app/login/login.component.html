@@ -2,11 +2,11 @@
     <div id="login-input" *ngIf="getLoggedInUser() == undefined">
       <input #username placeholder="username" value="Marijn"/>
       <input type="password" #password placeholder="password" value="Dirk"/>
-      <button (click)="authenticate(username.value, password.value); content.value=''; owner.value=''">login</button>
+      <button class="login" (click)="authenticate(username.value, password.value); content.value=''; owner.value=''">login</button>
     </div>
     <div id="logged-in-user" *ngIf="getLoggedInUser()">
       <p>Currently logged in: {{ getLoggedInUser() }}</p>
-      <button (click)="logOut()">logout</button>
+      <button class="login" (click)="logOut()">logout</button>
     </div>
 
     <button (click)="echo()">echo</button>

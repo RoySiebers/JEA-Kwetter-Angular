@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { TweetService }  from '../tweet.service';
+import { Owner } from '../owner';
+import { OwnerService } from '../owner.service';
 
 
 @Component({
@@ -15,28 +17,32 @@ import { TweetService }  from '../tweet.service';
 
 export class TweetDetailComponent implements OnInit {
 
-  @Input() tweet: Tweet;
-
+  private tweets: Tweet[];
+  @Input() owner: Owner;
   constructor(
     private route: ActivatedRoute,
     private tweetService: TweetService,
+    private ownerService: OwnerService,
     private location: Location
   ) {}
 
   ngOnInit(): void {
-    this.getTweet();
+    this.getTweets();
+    this.getOwner();
   }
-  getTweet(): void {
+  getTweets(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.tweetService.getTweet(id)
-      .subscribe(tweet => this.tweet = tweet);
+      this.tweetService.getTweetsFromOwner(id)
+        .subscribe(tweets => this.tweets = tweets);
   }
+  getOwner(): void {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.ownerService.getOwner(id)
+      .subscribe(owner => this.owner = owner);
+}
   goBack(): void {
     this.location.back();
   }
-  save(): void {
-    this.tweetService.updateTweet(this.tweet)
-      .subscribe(() => this.goBack());
-  }
+  
 
 }
