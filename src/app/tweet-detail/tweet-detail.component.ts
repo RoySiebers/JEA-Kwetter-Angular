@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { TweetService }  from '../tweet.service';
 import { Owner } from '../owner';
 import { OwnerService } from '../owner.service';
+import { LoginService } from '../login.service';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class TweetDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private tweetService: TweetService,
     private ownerService: OwnerService,
-    private location: Location
+    private location: Location,
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
@@ -44,5 +46,8 @@ export class TweetDetailComponent implements OnInit {
     this.location.back();
   }
   
+  getLoggedInUser(){
+    return this.loginService.getLoggedInUser();
+  }
 
 }

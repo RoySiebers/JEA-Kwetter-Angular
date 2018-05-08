@@ -4,6 +4,6 @@
     <a routerLink="/detail/{{tweet.owner.id}}">
       <span class="badge">{{tweet.owner.username}}</span>{{tweet.content}}
     </a>
-    <button class="delete" title="delete tweet" (click)="delete(tweet)">x</button>
+      <button *ngIf="getLoggedInUser() == tweet.owner.username" class="delete" title="delete tweet" (click)="delete(tweet)">x</button>
   </li>
 </ul>

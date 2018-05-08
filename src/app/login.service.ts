@@ -4,6 +4,7 @@ import { of } from 'rxjs/observable/of';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders, HttpResponse, HttpEvent } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Owner } from './owner';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -30,6 +31,7 @@ export class LoginService {
     this.http.post<any>(url,payload, httpOptions).subscribe((response) => {
       if (response){
         localStorage.setItem("LoggedIn", response.username);
+        localStorage.setItem("LoggedInId", response.userId);
         localStorage.setItem("AuthToken", response.AuthToken);
       }
     });
@@ -53,7 +55,7 @@ export class LoginService {
 
       let headers = new HttpHeaders();
       headers = headers.append("Authorization", "Bearer " + token);
-      
+
       authHttpOptions.headers = headers;
       const url = `${this.echoUrl}` + localStorage.getItem("LoggedIn");
       this.http.get(url, authHttpOptions).subscribe((response) =>{

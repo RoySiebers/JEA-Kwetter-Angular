@@ -4,6 +4,8 @@ import { Tweet } from '../tweet';
 import { TweetService } from '../tweet.service';
 import { Owner } from '../owner';
 
+import { LoginService } from '../login.service';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -13,7 +15,7 @@ export class ProfileComponent implements OnInit {
 
   tweets: Tweet[];
 
-  constructor(private tweetService: TweetService) { }
+  constructor(private tweetService: TweetService, private loginService: LoginService) { }
 
   getTweets(): void {
     this.tweetService.getTweets()
@@ -26,12 +28,23 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.getTweets();
   }
-  add(content: string, owner: number): void {
+  add(content: string): void {
     content = content.trim();
     if (!content) { return; }
-    this.tweetService.addTweet({ id: 22, content: 'Dit is een tweet', owner: new Owner(), date: new Date() })
-      .subscribe(tweet => {
-        this.tweets.push(tweet);
-      });
+    let owner:Owner = new Owner();
+    owner.id = localStorage.getItem("LoggedInId");
+    owner.username = localStorage.getItem("LoggedIn");
+
+    let newTweet:Tweet = new Tweet();
+    newTweet.owner = owner;
+    newTweet.content = content;
+
+    this.tweetService.addTweet( newTweet ).subscribe((tweet)=>{
+      this.getTweets();
+      this.tweets.push(tweet);
+    });
+  }
+  getLoggedInUser(){
+    return this.loginService.getLoggedInUser();
   }
 }

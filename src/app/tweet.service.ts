@@ -78,7 +78,7 @@ export class TweetService {
   addTweet(tweet: Tweet): Observable<Tweet> {
     const url = 'http://localhost:8080/JEA-Kwetter/api/tweets/post';
     return this.http.post<Tweet>(url, tweet, httpOptions).pipe(
-      tap((tweet: Tweet) => this.log(`added tweet w/ id=${tweet.id}`)),
+      tap((rtweet: Tweet) => this.log(`added tweet w/ id=${rtweet.content}`)),
       catchError(this.handleError<Tweet>('addTweet'))
     );  
   }

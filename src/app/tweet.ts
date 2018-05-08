@@ -1,8 +1,8 @@
 import {Owner} from './owner';
 
 export class Tweet {
-    id: number;
+    id?: number;
     content: string;
-    date: Date;
+    date?: Date;
     owner: Owner;
   }

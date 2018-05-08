@@ -3,6 +3,7 @@ import { Tweet } from '../tweet';
 
 import { TweetService } from '../tweet.service';
 import { Owner } from '../owner';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-tweet',
@@ -13,10 +14,16 @@ export class TweetComponent implements OnInit {
 
   tweets: Tweet[];
 
-  constructor(private tweetService: TweetService) { }
+  private owner:string;
+
+  constructor(private tweetService: TweetService, private loginService:LoginService) { }
 
   ngOnInit() {
     this.getTweets();
+  }
+
+  getLoggedInUser(){
+    return this.loginService.getLoggedInUser();
   }
 
   getTweets(): void {
@@ -24,14 +31,15 @@ export class TweetComponent implements OnInit {
       .subscribe(tweets => this.tweets = tweets);
   }
 
-  add(content: string,owner:number): void {
-    content = content.trim();
-    if (!content) { return; }
-    this.tweetService.addTweet( { id: 33, content: 'Dit is een tweet',owner: new Owner(),date:new Date() })
-      .subscribe(tweet => {
-        this.tweets.push(tweet);
-      });
-  }
+  // add(content: string): void {
+  //   content = content.trim();
+  //   if (!content) { return; }
+  //   this.tweetService.addTweet( {content: content , owner: localStorage.getItem("loggedInUserId"), date:new Date() })
+  //     .subscribe(tweet => {
+  //       this.tweets.push(tweet);
+  //     });
+  // }
+  
   delete(tweet: Tweet): void {
     this.tweets = this.tweets.filter(h => h !== tweet);
     this.tweetService.deleteTweet(tweet).subscribe();
