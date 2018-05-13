@@ -66,6 +66,14 @@ export class TweetService {
       catchError(this.handleError<Tweet>(`getTweet id=${id}`))
     );
   }
+
+  getTimeline(id: number): Observable<Tweet[]> {
+    const url = `${this.tweetsUrl}/timeline/${id}`;
+    return this.http.get<Tweet[]>(url).pipe(
+      tap(_ => this.log(`fetched timeline for id=${id}`)),
+      catchError(this.handleError<Tweet[]>(`getTimeline id=${id}`))
+    );
+  }
   /** PUT: update the tweet on the server */
   updateTweet(tweet: Tweet): Observable<any> {
     return this.http.put(this.tweetsUrl, tweet, httpOptions).pipe(

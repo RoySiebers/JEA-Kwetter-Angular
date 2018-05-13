@@ -1,10 +1,6 @@
 <app-tweet-search></app-tweet-search>
 Profile of {{owner.username}}
-<ul class="tweets">
-  <li *ngFor="let tweet of tweets">
-    <a routerLink="/detail/{{tweet.owner.id}}">
-      <span class="badge">{{tweet.owner.username}}</span>{{tweet.content}}
-    </a>
-    <button *ngIf="getLoggedInUser() == tweet.owner.username" class="delete" title="delete tweet" (click)="delete(tweet)">x</button>
-  </li>
-</ul>
+<div *ngIf="isCurrentUserFollowing">
+<button>follow</button>
+</div>
+<app-tweet [tweets]=tweets></app-tweet>

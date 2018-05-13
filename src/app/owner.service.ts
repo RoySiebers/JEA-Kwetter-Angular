@@ -15,10 +15,10 @@ const httpOptions = {
 @Injectable()
 export class OwnerService { 
 
-  private tweetsUrl = 'http://localhost:8080/JEA-Kwetter/api/users';  // URL to web api
+  private kwetterUserUrl = 'http://localhost:8080/JEA-Kwetter/api/users';  // URL to web api
 
   getOwners(): Observable<Owner[]> {
-    return this.http.get<Owner[]>(this.tweetsUrl)
+    return this.http.get<Owner[]>(this.kwetterUserUrl)
       .pipe(
         tap(owners => this.log(`fetched Owners`)),
         catchError(this.handleError('getUser In owner service', [])))
@@ -55,14 +55,20 @@ export class OwnerService {
 
   /** GET Owner by id. Will 404 if id not found */
   getOwner(id: number): Observable<Owner> {
-    const url = `${this.tweetsUrl}/${id}`;
+    const url = `${this.kwetterUserUrl}/${id}`;
     return this.http.get<Owner>(url).pipe(
       tap(_ => this.log(`fetched owner id=${id}`)),
       catchError(this.handleError<Owner>(`getOwner id=${id}`))
     );
   }
   
-
+getFollowing(id: number): Observable<Owner[]> {
+  const url = `${this.kwetterUserUrl}/following/${id}`;
+  return this.http.get<Owner[]>(url).pipe(
+    tap(_ => this.log(`fetched followers for id=${id}`)),
+    catchError(this.handleError<Owner[]>(`getFollowing for id=${id}`))
+  );
+}
 
   /* GET tweets whose owner contains search term */
   searchTweets(term: string): Observable<Tweet[]> {
@@ -70,7 +76,7 @@ export class OwnerService {
  
       return of([]);
     }
-    return this.http.get<Tweet[]>(`${this.tweetsUrl}/allTweetsUsername/${term}`).pipe(
+    return this.http.get<Tweet[]>(`${this.kwetterUserUrl}/allTweetsUsername/${term}`).pipe(
       tap(_ => this.log(`found tweets matching "${term}"`)),
       catchError(this.handleError<Tweet[]>('searchTweets', []))
     );

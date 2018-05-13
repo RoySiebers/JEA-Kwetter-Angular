@@ -1,16 +1,10 @@
-<!-- <div id="logged-in-user" *ngIf="getLoggedInUser()">
-  <p>Currently logged in: {{ getLoggedInUser() }}</p>
-  <button class="login" (click)="logOut()">logout</button>
-</div> -->
 <app-tweet-search></app-tweet-search>
 
 
 <div id="user-profile" *ngIf="getLoggedInUser()">
-  <h2>Current logged in user: {{ getLoggedInUser() }}</h2>
   <label>Write a Tweet!:
     <input #content placeholder="Content" />
   </label>
-  <!-- (click) passes input value to add() and then clears the input -->
   <button (click)="add(content.value); content.value='';">Post</button>
 </div>
-<app-tweet></app-tweet>
+<app-tweet [tweets]=tweets></app-tweet>

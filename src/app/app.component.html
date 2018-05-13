@@ -1,7 +1,9 @@
 <h1>{{title}}</h1>
+<h2 *ngIf="getLoggedInUser()">Currently logged in user: {{ getLoggedInUser() }}</h2>
+
 <nav>
   <a routerLink="/login"> Login</a>
-  <a routerLink="/profile"> Profile</a>
+  <a routerLink="/profile"> Dashboard</a>
 </nav>
 
 <router-outlet></router-outlet>

@@ -17,17 +17,24 @@ export class ProfileComponent implements OnInit {
 
   constructor(private tweetService: TweetService, private loginService: LoginService) { }
 
-  getTweets(): void {
-    this.tweetService.getTweets()
-      .subscribe(tweets => this.tweets = tweets);
+  getTimeline(): void {
+    if(localStorage.getItem("LoggedInId")){
+      let id = +localStorage.getItem("LoggedInId");
+      this.tweetService.getTimeline(id)
+        .subscribe(tweets => this.tweets = tweets);
+    }
+    else this.tweetService.getTweets().subscribe(tweets => this.tweets = tweets);
   }
+
   delete(tweet: Tweet): void {
     this.tweets = this.tweets.filter(h => h !== tweet);
     this.tweetService.deleteTweet(tweet).subscribe();
   }
+
   ngOnInit() {
-    this.getTweets();
+    this.getTimeline();
   }
+
   add(content: string): void {
     content = content.trim();
     if (!content) { return; }
@@ -40,10 +47,11 @@ export class ProfileComponent implements OnInit {
     newTweet.content = content;
 
     this.tweetService.addTweet( newTweet ).subscribe((tweet)=>{
-      this.getTweets();
+      this.getTimeline();
       this.tweets.push(tweet);
     });
   }
+  
   getLoggedInUser(){
     return this.loginService.getLoggedInUser();
   }

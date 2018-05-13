@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { LoginService } from './login.service';
+import { TweetService } from './tweet.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'JEA-Kwetter';
+
+  constructor(private tweetService: TweetService, private loginService:LoginService) { }
+
+  getLoggedInUser(){
+    return this.loginService.getLoggedInUser();
+  }
 }
