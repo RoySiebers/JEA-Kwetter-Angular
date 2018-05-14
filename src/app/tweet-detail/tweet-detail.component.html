@@ -1,6 +1,11 @@
 <app-tweet-search></app-tweet-search>
 Profile of {{owner.username}}
-<div *ngIf="isCurrentUserFollowing">
-<button>follow</button>
+<div *ngIf="!isOwnerCurrentLoggedInUser">
+    <div *ngIf="!isCurrentUserFollowing; else unfollowButton">
+        <button (click)="followOwner()">follow</button>
+    </div>
+    <ng-template #unfollowButton>
+        <button (click)="unfollowOwner()">unfollow</button>
+    </ng-template>
 </div>
 <app-tweet [tweets]=tweets></app-tweet>

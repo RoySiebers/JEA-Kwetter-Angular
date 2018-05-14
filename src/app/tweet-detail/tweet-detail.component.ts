@@ -17,6 +17,7 @@ import { LoginService } from '../login.service';
 export class TweetDetailComponent implements OnInit {
 	private tweets: Tweet[];
 	private isCurrentUserFollowing: boolean;
+	private isOwnerCurrentLoggedInUser: boolean;
 	@Input() owner: Owner;
 	constructor(
 		private route: ActivatedRoute,
@@ -30,17 +31,26 @@ export class TweetDetailComponent implements OnInit {
 		this.getTweets();
 		this.getOwner();
 	}
+
 	getTweets(): void {
 		const id = +this.route.snapshot.paramMap.get('id');
 		this.tweetService.getTweetsFromOwner(id).subscribe((tweets) => (this.tweets = tweets));
 	}
+
 	getOwner(): void {
 		const id = +this.route.snapshot.paramMap.get('id');
 		this.ownerService.getOwner(id).subscribe((owner) => {
 			this.owner = owner;
-			this.isLoggedInUserFollowing(+owner.id);
+			if (this.getLoggedInUser) {
+				if (this.getLoggedInUserId() == +owner.id) this.isOwnerCurrentLoggedInUser = true;
+				else {
+					this.isOwnerCurrentLoggedInUser = false;
+					this.isLoggedInUserFollowing(+owner.id);
+				}
+			}
 		});
 	}
+
 	goBack(): void {
 		this.location.back();
 	}
@@ -49,14 +59,31 @@ export class TweetDetailComponent implements OnInit {
 		return this.loginService.getLoggedInUser();
 	}
 
+	getLoggedInUserId(): number {
+		return +this.loginService.getLoggedInUserId();
+	}
+
 	isLoggedInUserFollowing(userId: number): void {
-		this.ownerService.getFollowing(userId).subscribe((data) => {
+		this.ownerService.getFollowing(this.getLoggedInUserId()).subscribe((data) => {
 			data.forEach((user) => {
-				if (user.username == this.getLoggedInUser()) {
+				if (+user.id == +userId) {
 					this.isCurrentUserFollowing = true;
+					return;
 				}
 			});
 		});
-		this.isCurrentUserFollowing = true;
+		this.isCurrentUserFollowing = false;
+	}
+
+	followOwner() {
+		this.ownerService.followOwner(this.getLoggedInUserId(), +this.owner.id).subscribe(() => {
+			this.isLoggedInUserFollowing(+this.owner.id);
+		});
+	}
+
+	unfollowOwner() {
+		this.ownerService.unfollowOwner(this.getLoggedInUserId(), +this.owner.id).subscribe(() => {
+			this.isLoggedInUserFollowing(+this.owner.id);
+		});
 	}
 }
