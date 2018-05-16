@@ -62,7 +62,7 @@ export class OwnerService {
 	}
 
 	getFollowing(id: number): Observable<Owner[]> {
-		const url = `${this.kwetterUserUrl}/following/${id}`;
+		const url = `${this.kwetterUserUrl}/${id}/following`;
 		return this.http
 			.get<Owner[]>(url)
 			.pipe(
@@ -72,7 +72,7 @@ export class OwnerService {
 	}
 
 	getFollowers(id: number): Observable<Owner[]> {
-		const url = `${this.kwetterUserUrl}/followers/${id}`;
+		const url = `${this.kwetterUserUrl}/${id}/followers`;
 		return this.http
 			.get<Owner[]>(url)
 			.pipe(
